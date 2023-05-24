@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserAuth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('loginPage');
+});
+
+Route::post('login', [UserAuth::class, 'login']);
+Route::view('debug', 'debug');
+Route::view('customerPage', 'customer.customerPage');
+Route::view('sellerPage', 'seller.sellerPage');
+
+Route::get('/logout', function () {
+    if (session()->has('regno')) {
+        session()->pull('regno');
+    }
+    return redirect('/');
+});
+
+Route::get('/login', function () {
+    if (session()->has('regno')) {
+        return redirect('customerPage');
+    }
+    return view('login');
 });
