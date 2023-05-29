@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SignUp;
 use App\Http\Controllers\UserAuth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,3 +37,16 @@ Route::get('/login', function () {
     }
     return view('login');
 });
+
+Route::get('/signup', function () {
+
+    return view('signupPage');
+});
+
+Route::get('/login', function () {
+
+    return view('loginPage');
+});
+
+
+Route::post('signup', [SignUp::class, 'createAcc']);

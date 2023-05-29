@@ -13,39 +13,22 @@ class UserAuth extends Controller
 {
     function login(Request $req)
     {
-
-
-
         $username = $req->input('username');
         $password = $req->input('password');
 
-        $data = $req->input();
+        $user = DB::table('users')->where('username', $username)->first();
 
-
-        $user = DB::table('registration')->where('username', $username)->first();
-        $req->session()->put('regno', $user->regno);
-
+        //create UI for echoing
         if ($user) {
-
-
-
-            // if (Hash::check($password, $user->password)) {
-            //     // Password matches
-            //     echo "Authentication successful!";
-            // } else {
-            //     // Password does not match
-            //     echo "Authentication failed: Invalid password!";
-            //     return dd($password, $user->password);
-            // }
-
-
-            if ($password == $user->password) {
+            if (Hash::check($password, $user->password)) {
                 // Password matches
                 if ($user->user_type === 'seller') {
                     // User is a seller
+                    $req->session()->put('regno', $user->regno);
                     return redirect('sellerPage');
                 } elseif ($user->user_type === 'customer') {
                     // User is a customer
+                    $req->session()->put('regno', $user->regno);
                     return redirect('customerPage');
                 } else {
                     // Role not specified or invalid
@@ -53,11 +36,11 @@ class UserAuth extends Controller
                 }
             } else {
                 // Password does not match
-                echo 'password dont match';
+                echo 'Password does not match';
             }
         } else {
             // User record does not exist
-            echo 'user does not exist';
+            echo 'User does not exist';
         }
     }
 }
