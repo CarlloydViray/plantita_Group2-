@@ -27,7 +27,10 @@ if(session('regno') == null){
     </center>
     <ul>
         <li>
-            <form action="sellerMyAcc.php" method="post"><input type="submit" value="My Account" name="myAcc"></form>
+            <form action="sellerMyAcc" method="post">
+                @csrf
+                <button type="submit">My Account</button>
+            </form>
         </li><br>
         <li>
             <form action="sellerPlantita.php" method="post"><input type="submit" value="View My Plantita Products"

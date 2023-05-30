@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CustomerMyAccount;
+use App\Http\Controllers\SellerMyAccount;
 use App\Http\Controllers\SignUp;
 use App\Http\Controllers\UserAuth;
 use Illuminate\Support\Facades\Route;
@@ -31,11 +33,11 @@ Route::get('/logout', function () {
     return redirect('/');
 });
 
-Route::get('/login', function () {
+Route::get('/', function () {
     if (session()->has('regno')) {
         return redirect('customerPage');
     }
-    return view('login');
+    return view('loginPage');
 });
 
 Route::get('/signup', function () {
@@ -50,3 +52,19 @@ Route::get('/login', function () {
 
 
 Route::post('signup', [SignUp::class, 'createAcc']);
+
+//edit accounts
+
+//customer
+route::resource('MyAccountCustomer', CustomerMyAccount::class);
+Route::post('customerMyAcc', [UserAuth::class, 'customerMyAccRoute']);
+
+Route::get('edit/customer/{id}', [CustomerMyAccount::class, 'edit']);
+Route::post('edit/customer/{id}', [CustomerMyAccount::class, 'update']);
+
+//seller
+route::resource('MyAccountSeller', SellerMyAccount::class);
+Route::post('sellerMyAcc', [UserAuth::class, 'sellerMyAccRoute']);
+
+Route::get('edit/seller/{id}', [SellerMyAccount::class, 'edit']);
+Route::post('edit/seller/{id}', [SellerMyAccount::class, 'update']);

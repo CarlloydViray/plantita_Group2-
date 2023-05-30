@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserAuth extends Controller
 {
-    function login(Request $req)
+    public function login(Request $req)
     {
         $username = $req->input('username');
         $password = $req->input('password');
@@ -42,5 +42,15 @@ class UserAuth extends Controller
             // User record does not exist
             echo 'User does not exist';
         }
+    }
+
+    public function customerMyAccRoute()
+    {
+        return redirect()->route('MyAccountCustomer.index');
+    }
+
+    public function sellerMyAccRoute()
+    {
+        return redirect()->route('MyAccountSeller.index');
     }
 }

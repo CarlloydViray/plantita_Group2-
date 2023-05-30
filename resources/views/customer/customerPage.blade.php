@@ -22,13 +22,14 @@ if(session('regno') == null){
 <body>
     <br><br>
     <center>
-        <h1>WELCOME TO PLANTITA ORDERING SYSTEM
+        <h1>WELCOME TO PLANTITA ORDERING SYSTEM CUSTOMER
         </h1>
     </center>
     <ul>
         <li>
-            <form action="customerMyAcc.php" method="post">
-                <input type="submit" value="My Account" name="myAcc">
+            <form action="customerMyAcc" method="post">
+                @csrf
+                <button type="submit">My Account</button>
             </form>
         </li><br>
         <li>
