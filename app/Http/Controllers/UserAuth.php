@@ -53,4 +53,9 @@ class UserAuth extends Controller
     {
         return redirect()->route('MyAccountSeller.index');
     }
+
+    public function sellerPlantitaRoute()
+    {
+        return redirect()->route('sellerMyPlantita.index');
+    }
 }

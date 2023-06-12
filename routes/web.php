@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerMyAccount;
 use App\Http\Controllers\SellerMyAccount;
+use App\Http\Controllers\SellerPlantita;
 use App\Http\Controllers\SignUp;
 use App\Http\Controllers\UserAuth;
 use Illuminate\Support\Facades\Route;
@@ -68,3 +69,16 @@ Route::post('sellerMyAcc', [UserAuth::class, 'sellerMyAccRoute']);
 
 Route::get('edit/seller/{id}', [SellerMyAccount::class, 'edit']);
 Route::post('edit/seller/{id}', [SellerMyAccount::class, 'update']);
+
+//
+
+//customer
+
+
+//seller plantita
+route::resource('sellerMyPlantita', SellerPlantita::class);
+Route::post('sellerPlantita', [UserAuth::class, 'sellerPlantitaRoute']);
+
+Route::get('edit/{id}', [SellerPlantita::class, 'edit']);
+Route::post('edit/{id}', [SellerPlantita::class, 'update']);
+Route::get('delete/{id}', [SellerPlantita::class, 'destroy']);
