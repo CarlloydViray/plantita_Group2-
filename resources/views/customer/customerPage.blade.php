@@ -38,8 +38,9 @@ if(session('regno') == null){
             </form>
         </li><br>
         <li>
-            <form action="browse.php" method="post">
-                <input type="submit" value="Browse Marketplace" name="browse">
+            <form action="customerMarketplaceDirect" method="post">
+                @csrf
+                <button type="submit">Browse Marketplace</button>
             </form>
         </li><br>
         <li>

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if(session('regno') == null){
+    echo "<br><br><center>Log in first</center>";
+
+    //add a template here for redirecting
+    header("refresh: 3; url=/");
+} else{
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,3 +89,8 @@
 </body>
 
 </html>
+<?php
+
+}
+
+?>

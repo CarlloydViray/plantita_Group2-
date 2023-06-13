@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\CustomerMyAccount;
+use App\Http\Controllers\Marketplace;
+use App\Http\Controllers\Payment;
 use App\Http\Controllers\SellerMyAccount;
 use App\Http\Controllers\SellerPlantita;
 use App\Http\Controllers\SignUp;
@@ -82,3 +84,11 @@ Route::post('sellerPlantita', [UserAuth::class, 'sellerPlantitaRoute']);
 Route::get('edit/{id}', [SellerPlantita::class, 'edit']);
 Route::post('edit/{id}', [SellerPlantita::class, 'update']);
 Route::get('delete/{id}', [SellerPlantita::class, 'destroy']);
+
+
+//customer Marketplace
+route::resource('customerMarketplace', Marketplace::class);
+Route::post('customerMarketplaceDirect', [UserAuth::class, 'customerMarketplaceRoute']);
+
+//customer payment
+Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentDirect']);

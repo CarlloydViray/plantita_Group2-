@@ -67,10 +67,12 @@ if(session('regno') == null){
         @enderror
         <br>
 
-        <input type="submit" class="btn btn-success btn-block" value="Update">
+        <input type="submit" class="btn btn-success btn-block" value="Add Plantita">
 
 
     </form>
+    <br>
+    <a href="/sellerPage">Go back to Home Page</a>
     <br><br><br>
     <table id="plantitas" class="table table-striped" style="width:100%">
         <thead>
@@ -93,9 +95,8 @@ if(session('regno') == null){
                         {{ $plantita->itemdesc }}
                     </td>
                     <td>
-                        <img src="{{ asset($plantita->img) }}" alt="Plantita Image">
-
-                        {{ $plantita->img }}
+                        <img src="{{ asset('storage/images/' . $plantita->img) }}" alt="Plantita Image" width="250"
+                            height="250">
                     </td>
                     <td>
                         {{ $plantita->itemprice }}

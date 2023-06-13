@@ -35,18 +35,16 @@ class SellerPlantita extends Controller
         $request->validate([
             'desc' => 'required|max:50',
             'price' => 'required|numeric',
-            'img' => 'required|image',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-
         $regno = session('regno');
-
-        $path = $request->file('img')->store('images', 'public');
-
+        $img = $request->file('img');
+        $hashImg = $img->hashName();
         $desc = $request->input('desc');
         $price = $request->input('price');
 
-        DB::insert('INSERT INTO plantita (itemdesc, itemprice, regno, img) VALUES (?,?,?,?)', [$desc, $price, $regno, $path]);
+        DB::insert('INSERT INTO plantita (itemdesc, itemprice, regno, img) VALUES (?,?,?,?)', [$desc, $price, $regno, $hashImg]);
 
         return redirect()->route('sellerMyPlantita.index');
     }
@@ -81,6 +79,7 @@ class SellerPlantita extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::delete('DELETE FROM plantita WHERE itemno = ?', [$id]);
+        return redirect()->route('sellerMyPlantita.index');
     }
 }

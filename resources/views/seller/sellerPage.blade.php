@@ -42,12 +42,15 @@ if(session('regno') == null){
                 @csrf
                 <button type="submit">View My Plantita Products</button>
             </form>
-            {{-- <form action="sellerPlantita.php" method="post"><input type="submit" value="View My Plantita Products"
-                    name="view"></form> --}}
+
         </li><br>
         <li>
-            <form action="sellerOrders.php" method="post"><input type="submit" value="Order Listing"
-                    name="orderListing"></form>
+            <form action="sellerPlantita" method="post">
+                @csrf
+                <button type="submit">Order Listing</button>
+            </form>
+            {{-- <form action="sellerOrders.php" method="post"><input type="submit" value="Order Listing"
+                    name="orderListing"></form> --}}
         </li><br>
         <li>
             <a href="/logout"><button>Logout</button></a>
