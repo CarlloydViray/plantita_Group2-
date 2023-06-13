@@ -62,12 +62,12 @@
             <span class="mb-3" style="color: red">{{ $message }}</span>
         @enderror
         <br>
-        Password: <input type="text" name="password" id="password" placeholder="Input Password"><br>
+        Password: <input type="password" name="password" id="password" placeholder="Input Password"><br>
         @error('password')
             <span class="mb-3" style="color: red">{{ $message }}</span>
         @enderror
         <br>
-        Re-Type Password: <input type="text" name="password2" id="password" placeholder="Input Password"><br>
+        Re-Type Password: <input type="password" name="password2" id="password" placeholder="Input Password"><br>
         @error('password2')
             <span class="mb-3" style="color: red">{{ $message }}</span>
         @enderror

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Controller
 {
@@ -12,11 +13,9 @@ class Payment extends Controller
     public function index(Request $request)
     {
 
-        // dd($request->input('debug'));
-        // $services = $request->input('itemno');
-        // foreach ($services as $service) {
-        //     dd($service);
-        // }
+
+
+        //return view('customer.sellerPlantitaPage', ['plantitas' => $plantitas]);
     }
 
     /**
@@ -78,16 +77,23 @@ class Payment extends Controller
             $itemdesc = $itemdescs[$key];
             $price = $prices[$key];
 
-            // Process the data or save it to the database
-            // ...
+            //DB::insert('INSERT INTO temp_pay (itemno) VALUES (?)', [$itemno]);
 
-            // Example: Output the selected item's data
-            echo "Item No: $itemno<br>";
-            echo "Item Description: $itemdesc<br>";
-            echo "Price: $price<br>";
-            echo "<br>";
+            $plantitas = DB::select('SELECT plantita.itemno, plantita.itemdesc, plantita.itemprice, plantita.img, users.username, users.first_name, users.last_name FROM plantita INNER JOIN users ON plantita.regno=users.regno WHERE itemno = ?', [$itemno]);
+
+            dd($plantitas);
+
+            // echo "Item No: $itemno<br>";
+            // echo "Item Description: $itemdesc<br>";
+            // echo "Price: $price<br>";
+            // echo "<br>";
         }
 
-        // Redirect or perform any other actions
+        $total = DB::select('SELECT SUM(plantita.itemprice) AS totalprice FROM temp_pay INNER JOIN plantita ON temp_pay.itemno =
+        plantita.itemno');
+
+        // return view('customer.customerPaymentPage', compact('plantitas', 'total'));.
+
+
     }
 }

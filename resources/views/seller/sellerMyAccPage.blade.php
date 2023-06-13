@@ -24,6 +24,17 @@ if(session('regno') == null){
 </head>
 
 <body>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <center>
+                {{ session('success') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <br><br><br>
     <center>
         <h1>MY ACCOUNT SELLER</h1>
     </center>

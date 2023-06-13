@@ -43,6 +43,48 @@ if(session('regno') == null){
         </form>
     </center>
 
+
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <th>Plantita Name</th>
+                <th>Image</th>
+                <th>Seller</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        @foreach ($plantitas as $plantita)
+            <tr>
+                <td>
+                    {{ $plantita->itemdesc }}
+                </td>
+                <td>
+                    <img src="{{ asset('storage/images/' . $plantita->img) }}" alt="Plantita Image" width="250"
+                        height="250">
+                </td>
+                <td>
+                    {{ $plantita->first_name }} {{ $plantita->last_name }}
+                </td>
+                <td>
+                    {{ $plantita->itemprice }}
+                </td>
+            </tr>
+        @endforeach
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="2">Total: </th>
+                <td>
+                    {{ $total[0]->totalprice }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <form action="payment.php" method="post">
+        <input type="submit" value="Purchase" name="purchase">
+    </form>
 </body>
 
 </html>

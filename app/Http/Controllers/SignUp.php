@@ -44,6 +44,6 @@ class SignUp extends Controller
             'gcash_no' => $gcashno,
         ]);
 
-        dd($request->input());
+        return redirect('/')->with('success', 'Account Created Successfully');
     }
 }

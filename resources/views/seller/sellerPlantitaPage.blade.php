@@ -40,7 +40,36 @@ if(session('regno') == null){
 </head>
 
 <body>
-    <center><br><br>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <center>
+                {{ session('success') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('info'))
+        <div class="alert alert-info alert-dismissible fade show">
+            <center>
+                {{ session('info') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('warning'))
+        <div class="alert alert-warning alert-dismissible fade show">
+            <center>
+                {{ session('warning') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    <center><br><br><br>
         <h1>My Plantitas</h1>
     </center>
     <br><br><br>

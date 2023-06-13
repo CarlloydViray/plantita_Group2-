@@ -13,6 +13,27 @@
 </head>
 
 <body>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <center>
+                {{ session('success') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <center>
+                {{ session('error') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
     <form action="login" method="post">
         @csrf
         <input type="text" name="username" placeholder="Input Username"><br>

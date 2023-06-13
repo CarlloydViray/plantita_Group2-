@@ -25,6 +25,13 @@ if(session('regno') == null){
 </head>
 
 <body>
+    @if (session('success'))
+        <div class="alert alert-success">
+            <center>
+                {{ session('success') }}
+            </center>
+        </div>
+    @endif
     <br><br>
     <center>
         <h1>WELCOME TO PLANTITA ORDERING SYSTEM SELLER

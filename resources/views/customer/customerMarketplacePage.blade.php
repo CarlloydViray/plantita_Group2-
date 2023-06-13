@@ -72,6 +72,7 @@ if(session('regno') == null){
                             <input type="checkbox" name="itemno[]" value="{{ $plantita->itemno }}">
                             <input type="hidden" name="itemdesc[]" value="{{ $plantita->itemdesc }}">
                             <input type="hidden" name="price[]" value="{{ $plantita->itemprice }}">
+
                         </td>
                     </tr>
                 @endforeach

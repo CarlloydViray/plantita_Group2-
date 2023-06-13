@@ -80,7 +80,7 @@ class SellerMyAccount extends Controller
         $hashedNewPassword = Hash::make($password);
 
         DB::update('UPDATE users SET username = ?, birthday = ?, `password` = ?, first_name = ?, last_name = ?, `address` = ?, gcash_no = ? WHERE regno = ?', [$username, $userBirthday, $hashedNewPassword, $first_name, $last_name, $address, $gcashno, $id]);
-        return redirect()->route('MyAccountSeller.index');
+        return redirect()->route('MyAccountSeller.index')->with('success', 'Account Credentials Updated');
     }
 
     /**

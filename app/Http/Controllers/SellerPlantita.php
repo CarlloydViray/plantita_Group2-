@@ -44,9 +44,12 @@ class SellerPlantita extends Controller
         $desc = $request->input('desc');
         $price = $request->input('price');
 
+        $img->store('images');
+
         DB::insert('INSERT INTO plantita (itemdesc, itemprice, regno, img) VALUES (?,?,?,?)', [$desc, $price, $regno, $hashImg]);
 
-        return redirect()->route('sellerMyPlantita.index');
+
+        return redirect()->route('sellerMyPlantita.index')->with('success', 'Plantita Added Successfully');
     }
 
     /**
@@ -71,7 +74,19 @@ class SellerPlantita extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'desc' => 'required|max:50',
+            'price' => 'required|numeric',
+        ]);
+
+        $regno = session('regno');
+        $desc = $request->input('desc');
+        $price = $request->input('price');
+
+
+
+        DB::update('UPDATE plantita SET itemdesc = ?, itemprice = ? WHERE itemno = ?', [$desc, $price, $id]);
+        return redirect()->route('sellerMyPlantita.index')->with('success', 'Plantita Updated Successfully');
     }
 
     /**
@@ -80,6 +95,6 @@ class SellerPlantita extends Controller
     public function destroy(string $id)
     {
         DB::delete('DELETE FROM plantita WHERE itemno = ?', [$id]);
-        return redirect()->route('sellerMyPlantita.index');
+        return redirect()->route('sellerMyPlantita.index')->with('warning', 'Plantita Deleted');
     }
 }

@@ -25,22 +25,22 @@ class UserAuth extends Controller
                 if ($user->user_type === 'seller') {
                     // User is a seller
                     $req->session()->put('regno', $user->regno);
-                    return redirect('sellerPage');
+                    return redirect('sellerPage')->with('success', 'Log in successful');
                 } elseif ($user->user_type === 'customer') {
                     // User is a customer
                     $req->session()->put('regno', $user->regno);
-                    return redirect('customerPage');
+                    return redirect('customerPage')->with('success', 'Log in successful');
                 } else {
                     // Role not specified or invalid
-                    echo "Authentication successful! Invalid role specified!";
+                    return redirect('/')->with('error', 'Authentication successful! Invalid role specified!');
                 }
             } else {
                 // Password does not match
-                echo 'Password does not match';
+                return redirect('/')->with('error', 'Incorrect Username or Password');
             }
         } else {
             // User record does not exist
-            echo 'User does not exist';
+            return redirect('/')->with('error', 'User does not exist');
         }
     }
 

@@ -91,4 +91,8 @@ route::resource('customerMarketplace', Marketplace::class);
 Route::post('customerMarketplaceDirect', [UserAuth::class, 'customerMarketplaceRoute']);
 
 //customer payment
+route::resource('customerPaymentPreview', Marketplace::class);
 Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentDirect']);
+Route::post('customerPaymentPage', [Payment::class, 'customerPaymentDirect']);
+
+//Route::post('/other-page', [OtherController::class, 'index'])->name('other-page');
