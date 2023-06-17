@@ -28,7 +28,7 @@ if(session('regno') == null){
     </center>
 
     @foreach ($plantitas as $plantita)
-        <form action="{{ $plantita->itemno }}" method="POST">
+        <form action="{{ $plantita->itemno }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <label>Item Description</label>
@@ -44,8 +44,17 @@ if(session('regno') == null){
             @error('price')
                 <span class="mb-3" style="color: red">{{ $message }}</span>
             @enderror
+            <label>Current Image</label>
+            <div>
+                <img src="{{ asset('storage/images/' . $plantita->img) }}" alt="Current Image"
+                    style="max-width: 200px;">
+            </div>
+            <label>Upload Image</label>
+            <input type="file" class="form-control" name="img">
+            @error('img')
+                <span class="mb-3" style="color: red">{{ $message }}</span>
+            @enderror
 
-            <br>
 
             <input type="submit" class="btn btn-success btn-block" value="Update">
 

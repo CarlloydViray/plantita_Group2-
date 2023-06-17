@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SellerPlantita extends Controller
 {
@@ -77,24 +78,44 @@ class SellerPlantita extends Controller
         $request->validate([
             'desc' => 'required|max:50',
             'price' => 'required|numeric',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        $regno = session('regno');
         $desc = $request->input('desc');
         $price = $request->input('price');
 
+        $item = DB::table('plantita')->where('itemno', $id)->first();
 
+        DB::table('plantita')->where('itemno', $id)->update([
+            'itemdesc' => $desc,
+            'itemprice' => $price,
+        ]);
 
-        DB::update('UPDATE plantita SET itemdesc = ?, itemprice = ? WHERE itemno = ?', [$desc, $price, $id]);
+        if ($request->hasFile('img')) {
+            $img = $request->file('img');
+            $hashImg = $img->hashName();
+
+            $img->store('images', 'public');
+            DB::table('plantita')->where('itemno', $id)->update([
+                'img' => $hashImg,
+            ]);
+
+            Storage::disk('public')->delete('images/' . $item->img);
+        }
+
         return redirect()->route('sellerMyPlantita.index')->with('success', 'Plantita Updated Successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
+        $item = DB::table('plantita')->where('itemno', $id)->first();
+        Storage::disk('public')->delete('images/' . $item->img);
         DB::delete('DELETE FROM plantita WHERE itemno = ?', [$id]);
+
         return redirect()->route('sellerMyPlantita.index')->with('warning', 'Plantita Deleted');
     }
 }
