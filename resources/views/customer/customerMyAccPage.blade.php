@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 if(session('regno') == null){
     echo "<br><br><center>Log in first</center>";
 

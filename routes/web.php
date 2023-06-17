@@ -5,10 +5,12 @@ use App\Http\Controllers\CustomerOrders;
 use App\Http\Controllers\Marketplace;
 use App\Http\Controllers\Payment;
 use App\Http\Controllers\SellerMyAccount;
+use App\Http\Controllers\SellerOrders;
 use App\Http\Controllers\SellerPlantita;
 use App\Http\Controllers\SignUp;
 use App\Http\Controllers\UserAuth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +41,19 @@ Route::get('/logout', function () {
 
 Route::get('/', function () {
     if (session()->has('regno')) {
-        return redirect('customerPage');
+        $regno = session('regno');
+        $user  = DB::select('SELECT * FROM users WHERE regno = ?', [$regno]);
+
+        if (!empty($user) && $user[0]->user_type == 'customer') {
+            return redirect('customerPage');
+        }
+        if (!empty($user) && $user[0]->user_type == 'seller') {
+            return redirect('sellerPage');
+        }
     }
     return view('loginPage');
 });
+
 
 Route::get('/signup', function () {
 
@@ -102,3 +113,10 @@ Route::post('customerPaymentPage', [Payment::class, 'customerPaymentDirect']);
 route::resource('customerOrders', CustomerOrders::class);
 Route::post('customerMyOrdersDirect', [UserAuth::class, 'customerMyOrdersRoute']);
 Route::get('delete/{id}', [CustomerOrders::class, 'destroy']);
+
+
+//seller orders
+route::resource('sellerOrders', SellerOrders::class);
+Route::post('sellerPlantita', [UserAuth::class, 'sellerOrdersRoute']);
+Route::get('edit/{id}', [SellerOrders::class, 'edit']);
+Route::post('edit/{id}', [SellerOrders::class, 'update']);

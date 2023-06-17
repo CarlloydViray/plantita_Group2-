@@ -1,5 +1,4 @@
 <?php
-
 if(session('regno') == null){
     echo "<br><br><center>Log in first</center>";
 
@@ -58,8 +57,6 @@ if(session('regno') == null){
                 @csrf
                 <button type="submit">Order Listing</button>
             </form>
-            {{-- <form action="sellerOrders.php" method="post"><input type="submit" value="Order Listing"
-                    name="orderListing"></form> --}}
         </li><br>
         <li>
             <a href="/logout"><button>Logout</button></a>

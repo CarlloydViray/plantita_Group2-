@@ -73,4 +73,8 @@ class UserAuth extends Controller
     {
         return redirect()->route('customerOrders.index');
     }
+    public function sellerOrdersRoute()
+    {
+        return redirect()->route('sellerOrders.index');
+    }
 }
