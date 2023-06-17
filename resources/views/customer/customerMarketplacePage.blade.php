@@ -31,6 +31,12 @@ if(session('regno') == null){
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
     <title>Marketplace</title>
+
+    <script>
+        $(document).ready(function() {
+            $('#plantitas').DataTable();
+        });
+    </script>
 </head>
 
 <body>
@@ -38,6 +44,9 @@ if(session('regno') == null){
     <center>
         <h1>MARKETPLACE</h1>
     </center>
+    <br>
+    <a href="/customerPage">Go back to Home Page</a>
+    <br><br><br>
 
     <form action="customerPaymentDirect" method="post" enctype="multipart/form-data">
         @csrf

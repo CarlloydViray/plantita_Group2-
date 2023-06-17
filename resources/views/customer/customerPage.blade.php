@@ -26,10 +26,12 @@ if(session('regno') == null){
 
 <body>
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show">
             <center>
                 {{ session('success') }}
+
             </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <br><br>
@@ -51,8 +53,9 @@ if(session('regno') == null){
             </form>
         </li><br>
         <li>
-            <form action="customerOrders.php" method="post">
-                <input type="submit" value="My Orders" name="myOrders">
+            <form action="customerMyOrdersDirect" method="post">
+                @csrf
+                <button type="submit">My Orders</button>
             </form>
         </li><br>
         <li>

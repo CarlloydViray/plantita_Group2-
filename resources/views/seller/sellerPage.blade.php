@@ -26,10 +26,12 @@ if(session('regno') == null){
 
 <body>
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show">
             <center>
                 {{ session('success') }}
+
             </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <br><br>

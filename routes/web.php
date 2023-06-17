@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerMyAccount;
+use App\Http\Controllers\CustomerOrders;
 use App\Http\Controllers\Marketplace;
 use App\Http\Controllers\Payment;
 use App\Http\Controllers\SellerMyAccount;
@@ -33,7 +34,7 @@ Route::get('/logout', function () {
     if (session()->has('regno')) {
         session()->pull('regno');
     }
-    return redirect('/');
+    return redirect('/')->with('success', 'Log out successful');
 });
 
 Route::get('/', function () {
@@ -96,3 +97,8 @@ Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentDirect']);
 Route::post('customerPaymentPage', [Payment::class, 'customerPaymentDirect']);
 
 //Route::post('/other-page', [OtherController::class, 'index'])->name('other-page');
+
+//customer orders
+route::resource('customerOrders', CustomerOrders::class);
+Route::post('customerMyOrdersDirect', [UserAuth::class, 'customerMyOrdersRoute']);
+Route::get('delete/{id}', [CustomerOrders::class, 'destroy']);
