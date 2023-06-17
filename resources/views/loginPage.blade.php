@@ -32,18 +32,40 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Login</h2>
+                        <form action="login" method="post">
 
-
-    <form action="login" method="post">
-        @csrf
-        <input type="text" name="username" placeholder="Input Username"><br>
-        <br>
-        <input type="password" name="password" placeholder="Input Password"><br>
-        <br>
-        <input type="submit" value="Login" name="login">
-    </form>
-
-    <p><a href="/signup">Don't have an account?</a></p>
+                            @csrf
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter username">
+                                @error('username')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Enter password">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div><br>
+                            <button type="submit" class="btn btn-primary ">Login</button>
+                        </form>
+                        <p class="card-text">Don't have an account? Click <a href="/signup">here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

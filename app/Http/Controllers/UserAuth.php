@@ -13,6 +13,12 @@ class UserAuth extends Controller
 {
     public function login(Request $req)
     {
+
+        $this->validate($req, [
+            'username' => 'required',
+            'password' => 'required',
+
+        ]);
         $username = $req->input('username');
         $password = $req->input('password');
 

@@ -12,10 +12,6 @@ class Payment extends Controller
      */
     public function index(Request $request)
     {
-
-
-
-        //return view('customer.sellerPlantitaPage', ['plantitas' => $plantitas]);
     }
 
     /**
@@ -31,7 +27,30 @@ class Payment extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'gcash' => 'required|',
+        ]);
+
+        $regno = session('regno');
+        $price = $request->input('gcash');
+        $date = date('Y-m-d H:i:s');
+
+
+        DB::insert('INSERT INTO order (order_date, regno) VALUES (?,?)', [$date, $regno]);
+
+        $lastInsertedId = DB::getPdo()->lastInsertId();
+
+        $items = DB::select('SELECT * FROM temp_pay');
+
+        foreach ($items as $item) {
+
+            $price = DB::select('SELECT plantita.itemprice FROM plantita INNER JOIN temp_pay ON plantita.itemno = temp_pay.itemno WHERE plantita.itemno =?', [$item]);
+            DB::insert('INSERT INTO order_plantita(itemno, orderno, `status`, price) VALUES (?,?,?, ?)', [$item, $lastInsertedId, 'On Process', $price]);
+        }
+
+        DB::delete('DELETE FROM temp_pay');
+
+        return redirect()->route('customerMarketplace.index')->with('success', 'Please select at least one item.');
     }
 
     /**
@@ -66,34 +85,29 @@ class Payment extends Controller
         //
     }
 
-    public function customerPaymentDirect(Request $request)
+    public function customerPaymentRoute(Request $request)
     {
-        $itemnos = $request->input('itemno');
-        $itemdescs = $request->input('itemdesc');
-        $prices = $request->input('price');
+        $items = $request->input('itemno');
 
-        // Now you can access the selected items and their corresponding data
-        foreach ($itemnos as $key => $itemno) {
-            $itemdesc = $itemdescs[$key];
-            $price = $prices[$key];
+        if (!empty($items)) {
+            $orders = DB::table('plantita')
+                ->join('users', 'plantita.regno', '=', 'users.regno')
+                ->whereIn('itemno', $items)
+                ->select('plantita.itemno', 'plantita.itemdesc', 'plantita.itemprice', 'plantita.img', 'users.username', 'users.first_name', 'users.last_name', 'users.gcash_no')
+                ->get();
 
-            //DB::insert('INSERT INTO temp_pay (itemno) VALUES (?)', [$itemno]);
 
-            $plantitas = DB::select('SELECT plantita.itemno, plantita.itemdesc, plantita.itemprice, plantita.img, users.username, users.first_name, users.last_name FROM plantita INNER JOIN users ON plantita.regno=users.regno WHERE itemno = ?', [$itemno]);
+            foreach ($items as $item) {
+                DB::insert('INSERT INTO temp_pay (itemno) VALUES (?)', [$item]);
+            }
 
-            dd($plantitas);
+            $sum = DB::select('SELECT SUM(plantita.itemprice) AS totalprice FROM temp_pay INNER JOIN plantita ON temp_pay.itemno = plantita.itemno');
 
-            // echo "Item No: $itemno<br>";
-            // echo "Item Description: $itemdesc<br>";
-            // echo "Price: $price<br>";
-            // echo "<br>";
+
+
+            return view('customer.customerPaymentPreviewPage', ['orders' => $orders, 'sum' => $sum]);
+        } else {
+            return redirect()->route('customerMarketplace.index')->with('error', 'Please select at least one item.');
         }
-
-        $total = DB::select('SELECT SUM(plantita.itemprice) AS totalprice FROM temp_pay INNER JOIN plantita ON temp_pay.itemno =
-        plantita.itemno');
-
-        // return view('customer.customerPaymentPage', compact('plantitas', 'total'));.
-
-
     }
 }

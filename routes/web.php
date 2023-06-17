@@ -91,11 +91,11 @@ Route::post('edit/seller/{id}', [SellerMyAccount::class, 'update']);
 
 //seller plantita
 route::resource('sellerMyPlantita', SellerPlantita::class);
-Route::post('sellerPlantita', [UserAuth::class, 'sellerPlantitaRoute']);
+Route::post('sellerPlantitaDirect', [UserAuth::class, 'sellerPlantitaRoute']);
 
-Route::get('edit/{id}', [SellerPlantita::class, 'edit']);
-Route::post('edit/{id}', [SellerPlantita::class, 'update']);
-Route::get('delete/{id}', [SellerPlantita::class, 'destroy']);
+Route::get('edit/plantita/{id}', [SellerPlantita::class, 'edit']);
+Route::post('edit/plantita/{id}', [SellerPlantita::class, 'update']);
+Route::get('delete/plantita/{id}', [SellerPlantita::class, 'destroy']);
 
 
 //customer Marketplace
@@ -103,20 +103,18 @@ route::resource('customerMarketplace', Marketplace::class);
 Route::post('customerMarketplaceDirect', [UserAuth::class, 'customerMarketplaceRoute']);
 
 //customer payment
-route::resource('customerPaymentPreview', Marketplace::class);
-Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentDirect']);
-Route::post('customerPaymentPage', [Payment::class, 'customerPaymentDirect']);
+route::resource('customerPayment', Payment::class);
+Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentRoute']);
 
-//Route::post('/other-page', [OtherController::class, 'index'])->name('other-page');
 
 //customer orders
 route::resource('customerOrders', CustomerOrders::class);
 Route::post('customerMyOrdersDirect', [UserAuth::class, 'customerMyOrdersRoute']);
-Route::get('delete/{id}', [CustomerOrders::class, 'destroy']);
+Route::get('delete/order/{id}', [CustomerOrders::class, 'destroy']);
 
 
 //seller orders
 route::resource('sellerOrders', SellerOrders::class);
-Route::post('sellerPlantita', [UserAuth::class, 'sellerOrdersRoute']);
+Route::post('sellerOrdersDirect', [UserAuth::class, 'sellerOrdersRoute']);
 Route::get('edit/{id}', [SellerOrders::class, 'edit']);
 Route::post('edit/{id}', [SellerOrders::class, 'update']);

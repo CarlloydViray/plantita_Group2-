@@ -1,9 +1,38 @@
 <?php
 if(session('regno') == null){
-    echo "<br><br><center>Log in first</center>";
+    ?>
+<html lang="en">
 
-    //add a template here for redirecting
-    header("refresh: 3; url=/");
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Login Required</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="alert alert-warning text-center">
+                    <h4>Please log in to access this page.</h4>
+                    <p>If you don't have an account, you can <a href="/signup">sign up here</a>.</p>
+                    <p>Already have an account? <a href="/login">Log in</a> to continue.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+<?php
 } else{
 ?>
 
@@ -38,6 +67,24 @@ if(session('regno') == null){
 </head>
 
 <body>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <center>
+                {{ session('success') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <center>
+                {{ session('error') }}
+
+            </center>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <br><br>
     <center>
         <h1>MARKETPLACE</h1>
@@ -77,8 +124,6 @@ if(session('regno') == null){
                         </td>
                         <td>
                             <input type="checkbox" name="itemno[]" value="{{ $plantita->itemno }}">
-                            <input type="hidden" name="itemdesc[]" value="{{ $plantita->itemdesc }}">
-                            <input type="hidden" name="price[]" value="{{ $plantita->itemprice }}">
 
                         </td>
                     </tr>
