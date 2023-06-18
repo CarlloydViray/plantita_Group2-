@@ -52,69 +52,95 @@ if(session('regno') == null){
 </head>
 
 <body>
-    <center>
-        <h1>Edit My Account SELLER</h1>
-    </center>
+    <br><br>
+    <div class="container">
+        <center>
+            <h1>Edit My Account</h1>
+        </center>
 
-    @foreach ($users as $user)
-        <form action="{{ $user->regno }}" method="post">
-            @csrf
-            First Name: <input type="text" name="first_name" id="first_name" placeholder="Input First name"
-                value="{{ $user->first_name }}"><br>
-            @error('first_name')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-            Last Name: <input type="text" name="last_name" id="last_name" placeholder="Input Last name"
-                value="{{ $user->last_name }}"><br>
-            @error('last_name')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-            Address: <input type="text" name="address" id="address" placeholder="Input Address"
-                value="{{ $user->address }}"><br>
-            @error('address')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-            Birthday <input type="date" name="userBirthday" id="userBirthday" id=""
-                value="{{ \Carbon\Carbon::parse($user->birthday)->format('Y-m-d') }}"><br>
-            @error('userBirthday')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-            Gcash Number <input type="text" name="gcashno" id="gcashno" id=""
-                placeholder="Input Gcash Number" value="{{ $user->gcash_no }}"><br>
-            @error('gcashno')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
+        @foreach ($users as $user)
+            <form action="{{ $user->regno }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="first_name"
+                        placeholder="Input First name" value="{{ $user->first_name }}">
+                    @error('first_name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            Username: <input type="text" name="username" id="username" placeholder="Input Username"
-                value="{{ $user->username }}"><br>
-            @error('username')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="last_name"
+                        placeholder="Input Last name" value="{{ $user->last_name }}">
+                    @error('last_name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Input Address"
+                        value="{{ $user->address }}">
+                    @error('address')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date" class="form-control" id="birthday" name="userBirthday"
+                        value="{{ \Carbon\Carbon::parse($user->birthday)->format('Y-m-d') }}">
+                    @error('userBirthday')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="gcashNo">Gcash Number</label>
+                    <input type="text" class="form-control" id="gcashNo" name="gcashno"
+                        placeholder="Input Gcash Number" value="{{ $user->gcash_no }}">
+                    @error('gcashno')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username"
+                        placeholder="Input Username" value="{{ $user->username }}">
+                    @error('username')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Input Password">
+                    @error('password')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Re-Type Password</label>
+                    <input type="password" class="form-control" id="password2" name="password2"
+                        placeholder="Input Password">
+                    @error('password2')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Update Credentials</button>
+            </form>
             <br>
-            Password: <input type="password" name="password" id="password" placeholder="Input Password"><br>
-            @error('password')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-            Re-Type Password: <input type="password" name="password2" id="password" placeholder="Input Password"><br>
-            @error('password2')
-                <span class="mb-3" style="color: red">{{ $message }}</span>
-            @enderror
-            <br>
-
-            <input type="submit" value="Update Credentials" name="create">
-        </form>
-
-
-
-        <a href="javascript:void(0);" onclick="history.back();">Cancel</a>
-    @endforeach
+            <a href="javascript:void(0);" onclick="history.back();" class="btn btn-secondary">Cancel</a>
+        @endforeach
+    </div>
 </body>
+
 
 </html>
 <?php

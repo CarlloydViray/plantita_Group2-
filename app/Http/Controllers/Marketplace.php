@@ -13,7 +13,7 @@ class Marketplace extends Controller
     public function index()
     {
         $regno = session('regno');
-        $plantitas = DB::select('SELECT plantita.itemno, plantita.itemdesc, plantita.itemprice, plantita.img, users.username, users.first_name, users.last_name FROM plantita INNER JOIN users ON plantita.regno=users.regno');
+        $plantitas = DB::select('SELECT plantita.itemno, plantita.itemdesc, plantita.itemprice, plantita.img, users.username, users.first_name, users.last_name FROM plantita INNER JOIN users ON plantita.regno=users.regno ORDER BY RAND();');
 
         return view('customer.customerMarketplacePage', ['plantitas' => $plantitas]);
     }

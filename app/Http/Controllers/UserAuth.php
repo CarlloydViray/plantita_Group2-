@@ -70,9 +70,35 @@ class UserAuth extends Controller
         return redirect()->route('customerMarketplace.index');
     }
 
-    public function customerPaymentRoute()
+    public function customerPaymentRoute(Request $request)
     {
-        return redirect()->route('customerPayment.index');
+
+        $items = $request->input('itemno');
+
+        if (!empty($items)) {
+            $orders = DB::table('plantita')
+                ->join('users', 'plantita.regno', '=', 'users.regno')
+                ->whereIn('itemno', $items)
+                ->select('plantita.itemno', 'plantita.itemdesc', 'plantita.itemprice', 'plantita.img', 'users.username', 'users.first_name', 'users.last_name', 'users.gcash_no')
+                ->get();
+
+
+            foreach ($items as $item) {
+                DB::insert('INSERT INTO temp_pay (itemno) VALUES (?)', [$item]);
+            }
+
+            $sum = DB::select('SELECT SUM(plantita.itemprice) AS totalprice FROM temp_pay INNER JOIN plantita ON temp_pay.itemno = plantita.itemno');
+
+
+            $request->session()->put('orders', $orders);
+            $request->session()->put('sum', $sum);
+            // dd($orders);
+            return redirect()->route('customerPayment.index');
+            // return view('customer.customerPaymentPreviewPage', ['orders' => $orders, 'sum' => $sum]);
+        } else {
+            return redirect()->route('customerMarketplace.index')->with('error', 'Please select at least one item.');
+        }
+        //
     }
 
     public function customerMyOrdersRoute()

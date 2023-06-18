@@ -69,73 +69,66 @@ if(session('regno') == null){
 <body>
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show">
-            <center>
-                {{ session('success') }}
-
-            </center>
+            <div class="container">
+                <center>
+                    {{ session('success') }}
+                </center>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show">
-            <center>
-                {{ session('error') }}
-
-            </center>
+            <div class="container">
+                <center>
+                    {{ session('error') }}
+                </center>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <br><br>
-    <center>
-        <h1>MARKETPLACE</h1>
-    </center>
-    <br>
-    <a href="/customerPage">Go back to Home Page</a>
-    <br><br><br>
 
-    <form action="customerPaymentDirect" method="post" enctype="multipart/form-data">
-        @csrf
-        <table id="plantitas" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Plantita Name</th>
-                    <th>Image</th>
-                    <th>Price</th>
-                    <th>Seller</th>
-                    <th>Buy?</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="container">
+        <br><br>
+        <center>
+            <h1>MARKETPLACE</h1>
+            <br>
+            <a href="/customerPage" class="btn btn-primary">Go back to Home Page</a>
+        </center>
+
+        <br><br><br>
+
+        <form action="customerPaymentDirect" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="row">
                 @foreach ($plantitas as $plantita)
-                    <tr>
-                        <td>
-                            {{ $plantita->itemdesc }}
-                        </td>
-                        <td>
-                            <img src="{{ asset('storage/images/' . $plantita->img) }}" alt="Plantita Image"
-                                width="250" height="250">
-                        </td>
-                        <td>
-                            {{ $plantita->itemprice }}
-                        </td>
-                        <td>
-                            {{ $plantita->first_name }}
-                            {{ $plantita->last_name }}
-                        </td>
-                        <td>
-                            <input type="checkbox" name="itemno[]" value="{{ $plantita->itemno }}">
-
-                        </td>
-                    </tr>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="{{ asset('storage/images/' . $plantita->img) }}" class="card-img-top"
+                                alt="Plantita Image" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $plantita->itemdesc }}</h5>
+                                <p class="card-text">Price: {{ $plantita->itemprice }}</p>
+                                <p class="card-text">Seller: {{ $plantita->first_name }} {{ $plantita->last_name }}</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="itemno[]"
+                                        value="{{ $plantita->itemno }}">
+                                    <label class="form-check-label" for="plantitaCheckbox">Buy?</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-            </tbody>
-        </table>
+            </div>
 
-        <input type="submit" class="btn btn-success btn-block" value="Add Checked Plantita/s to Cart">
-    </form>
-
-
+            <center>
+                <input type="submit" class="btn btn-success btn-block" value="Add Checked Plantita/s to Cart">
+            </center>
+        </form>
+        <br><br>
+    </div>
 </body>
+
 
 </html>
 

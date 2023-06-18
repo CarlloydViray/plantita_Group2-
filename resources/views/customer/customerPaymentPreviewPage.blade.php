@@ -67,73 +67,91 @@ if(session('regno') == null){
             $('#plantitas').DataTable();
         });
     </script>
+
+    <style>
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #e2e2e2;
+            border-radius: 5px;
+        }
+
+        .product-card img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .product-card h5 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .product-card p {
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 100%;
+        }
+
+        .total-price {
+            font-weight: bold;
+        }
+    </style>
+
+
 </head>
 
+
 <body>
-
     <br><br>
-    <center>
-        <h1>My Plantita Cart</h1>
-        <br>
-        <a href="/customerMarketplace" class="btn btn-secondary">Cancel</a>
-    </center>
-    <br><br>
+    <div class="container">
+        <center>
+            <h1>My Plantita Cart</h1>
+            <br>
+            <a href="/customerMarketplace" class="btn btn-secondary">Cancel</a>
+        </center>
+        <br><br>
 
-    <form action="{{ route('customerPayment.store') }}" method="POST">
-        @csrf
-        <table id="plantitas" class="table table-striped" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Plantita Name</th>
-                    <th>Image</th>
-                    <th>Seller</th>
-                    <th>Price</th>
-                    <th>Gcash Number</th>
-                    <th>Enter Gcash Reference No.</th>
-                </tr>
-            </thead>
-            <tbody>
+        <form action="{{ route('customerPayment.store') }}" method="POST">
+            @csrf
+            <div class="row">
                 @foreach ($orders as $order)
-                    <tr>
-                        <td>
-                            {{ $order->itemdesc }}
-                        </td>
-                        <td>
-                            <img src="{{ asset('storage/images/' . $order->img) }}" alt="Plantita Image" width="250"
-                                height="250">
-                        </td>
-                        <td>
-                            {{ $order->first_name . ' ' . $order->last_name }}
-                        </td>
-                        <td>
-                            {{ $order->itemprice }}
-                        </td>
-                        <td>
-                            {{ $order->gcash_no }}
-                        </td>
-                        <td>
-                            <input type="text" name="gcash">
-                        </td>
-                    </tr>
+                    <div class="col-md-4">
+                        <div class="product-card">
+                            <img src="{{ asset('storage/images/' . $order->img) }}" alt="Plantita Image">
+                            <h5>{{ $order->itemdesc }}</h5>
+                            <p>Seller: {{ $order->first_name . ' ' . $order->last_name }}</p>
+                            <p>Price: {{ $order->itemprice }}</p>
+                            <p>Gcash Number: {{ $order->gcash_no }}</p>
+                            <div class="mb-3">
+                                <label for="gcashRef" class="form-label">Enter Gcash Reference No.</label>
+                                <input type="text" name="gcash" value="{{ old('gcash') }}" class="form-control"
+                                    id="gcashRef">
+                                @error('gcash')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-            </tbody>
-            <tfoot>
-
-                <tr>
-                    <th colspan="3">Total: </th>
-
-                    <td>
-                        @foreach ($sum as $total)
-                            {{ $total->totalprice }}
-                        @endforeach
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
-        <input type="submit" class="btn btn-success btn-block" value="Order">
-    </form>
+            </div>
+            <div class="text-center total-price">
+                Total: @foreach ($sum as $total)
+                    {{ $total->totalprice }}
+                @endforeach
+            </div>
+            <br>
+            <div class="text-center">
+                <input type="submit" class="btn btn-success btn-lg" value="Order">
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -104,7 +104,7 @@ Route::post('customerMarketplaceDirect', [UserAuth::class, 'customerMarketplaceR
 
 //customer payment
 route::resource('customerPayment', Payment::class);
-Route::post('customerPaymentDirect', [Payment::class, 'customerPaymentRoute']);
+Route::post('customerPaymentDirect', [UserAuth::class, 'customerPaymentRoute']);
 
 
 //customer orders

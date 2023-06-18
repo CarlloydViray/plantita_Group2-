@@ -143,6 +143,7 @@ if(session('regno') == null){
             </div>
         </div>
     </div>
+    <br><br>
 
 </body>
 

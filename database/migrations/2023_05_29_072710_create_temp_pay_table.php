@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('temp_pay', function (Blueprint $table) {
             $table->integer('itemno');
-            $table->integer('itemdesc');
-            $table->integer('itemprice');
         });
     }
 

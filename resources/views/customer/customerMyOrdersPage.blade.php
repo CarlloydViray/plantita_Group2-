@@ -71,78 +71,51 @@ if(session('regno') == null){
 <body>
     @if (session('warning'))
         <div class="alert alert-warning alert-dismissible fade show">
-            <center>
-                {{ session('warning') }}
-
-            </center>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="container">
+                <center>
+                    {{ session('warning') }}
+                </center>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
         </div>
     @endif
     <br><br>
-    <center>
-        <h1>
-            My Orders
-        </h1>
-    </center>
-    <br>
-    <a href="/customerPage">Go back to Home Page</a>
-    <br><br><br>
+    <div class="container">
+        <center>
+            <h1>My Orders</h1>
+            <br>
+            <a href="/customerPage" class="btn btn-primary">Go back to Home Page</a>
+        </center>
 
-    <table id="plantitas" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>Order No</th>
-                <th>Trans No</th>
-                <th>Item No (Plantita)</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Remarks</th>
-                <th>Cancel?</th>
-            </tr>
-        </thead>
-        <tbody>
+        <br><br><br>
+
+        <div class="row row-cols-1 row-cols-md-2 g-4">
             @foreach ($users as $user)
-                <tr>
-                    <td>
-                        {{ $user->orderno }}
-                    </td>
-                    <td>
-                        {{ $user->transno }}
-                    </td>
-                    <td>
-                        {{ $user->itemno }}
-                    </td>
-                    <td>
-                        <img src="{{ asset('storage/images/' . $user->img) }}" alt="Plantita Image" width="250"
-                            height="250">
-                    </td>
-                    <td>
-                        {{ $user->itemdesc }}
-                    </td>
-                    <td>
-                        {{ $user->price }}
-                    </td>
-                    <td>
-                        {{ $user->status }}
-                    </td>
-                    <td>
-                        {{ $user->remarks }}
-                    </td>
-                    <td>
-                        <form action="{{ route('customerOrders.destroy', $user->transno) }}" method="post">
-                            <a class="btn btn-danger" href="/delete/order/{{ $user->transno }}"
-                                onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a>
-                        </form>
-                    </td>
-
-
-                </tr>
+                <div class="col">
+                    <div class="card">
+                        <img src="{{ asset('storage/images/' . $user->img) }}" class="card-img-top" alt="Plantita Image"
+                            style="height: 250px;">
+                        <div class="card-body">
+                            <h5 class="card-title">Order No: {{ $user->orderno }}</h5>
+                            <p class="card-text">Trans No: {{ $user->transno }}</p>
+                            <p class="card-text">Item No (Plantita): {{ $user->itemno }}</p>
+                            <p class="card-text">Description: {{ $user->itemdesc }}</p>
+                            <p class="card-text">Price: {{ $user->price }}</p>
+                            <p class="card-text">Status: {{ $user->status }}</p>
+                            <p class="card-text">Remarks: {{ $user->remarks }}</p>
+                            <form action="{{ route('customerOrders.destroy', $user->transno) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             @endforeach
-        </tbody>
-    </table>
-
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

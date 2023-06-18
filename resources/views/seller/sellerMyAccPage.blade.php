@@ -56,29 +56,53 @@ if(session('regno') == null){
         <div class="alert alert-success alert-dismissible fade show">
             <center>
                 {{ session('success') }}
-
             </center>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     <br><br><br>
-    <center>
-        <h1>MY ACCOUNT SELLER</h1>
-    </center>
-    @foreach ($users as $user)
-        First Name: <input type="text" value="{{ $user->first_name }}" readonly><br><br>
-        Last Name: <input type="text" value="{{ $user->last_name }}" readonly><br><br>
-        Address: <input type="text" value="{{ $user->birthday }}" readonly><br><br>
-        Birthday: <input type="date" value="{{ \Carbon\Carbon::parse($user->birthday)->format('Y-m-d') }}"
-            readonly><br><br>
-        Gcash Number: <input type="text" value="{{ $user->gcash_no }}" readonly><br><br>
-        Username: <input type="text" value="{{ $user->username }}" readonly><br><br>
-
-        <a href="/edit/seller/{{ $user->regno }}">Edit My Account</a><br>
-        <a href="/sellerPage">Go back to Home Page</a>
-    @endforeach
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <center>
+                    <h1>MY ACCOUNT SELLER</h1>
+                </center>
+                @foreach ($users as $user)
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" value="{{ $user->first_name }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" value="{{ $user->last_name }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" value="{{ $user->birthday }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthday">Birthday:</label>
+                        <input type="date" class="form-control"
+                            value="{{ \Carbon\Carbon::parse($user->birthday)->format('Y-m-d') }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="gcashNo">Gcash Number:</label>
+                        <input type="text" class="form-control" value="{{ $user->gcash_no }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" value="{{ $user->username }}" readonly>
+                    </div>
+                    <br>
+                    <a href="/edit/seller/{{ $user->regno }}" class="btn btn-primary">Edit My Account</a><br><br>
+                    <a href="/sellerPage" class="btn btn-secondary">Go back to Home Page</a>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </body>
+
 
 </html>
 <?php
