@@ -137,6 +137,14 @@ if(session('regno') == null){
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Enter Amount</label>
+                                <input type="text" name="amount" value="{{ old('amount') }}" class="form-control"
+                                    id="gcashRef">
+                                @error('amount')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 @endforeach

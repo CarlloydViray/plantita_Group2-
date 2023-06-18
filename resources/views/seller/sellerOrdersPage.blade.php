@@ -77,7 +77,7 @@ if(session('regno') == null){
         </div>
     @endif
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col text-center mt-5">
                 <h1>Orders Listing</h1>
@@ -91,6 +91,9 @@ if(session('regno') == null){
                     <thead>
                         <tr>
                             <th>Customer Name</th>
+                            <th>Customer Gcash Number</th>
+                            <th>Customer Gcash Reference Number</th>
+                            <th>Customer Payment Amount</th>
                             <th>Order No</th>
                             <th>Trans No</th>
                             <th>Item No</th>
@@ -107,6 +110,15 @@ if(session('regno') == null){
                             <tr>
                                 <td>
                                     {{ $plantita->first_name . ' ' . $plantita->last_name }}
+                                </td>
+                                <td>
+                                    {{ $plantita->gcash_no }}
+                                </td>
+                                <td>
+                                    {{ $plantita->gcashrefno }}
+                                </td>
+                                <td>
+                                    {{ $plantita->amount }}
                                 </td>
                                 <td>
                                     {{ $plantita->orderno }}

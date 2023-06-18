@@ -13,12 +13,13 @@ class SellerOrders extends Controller
     public function index()
     {
         $regno = session('regno');
-        $plantitas = DB::select('SELECT users.first_name, users.last_name, order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks
+        $plantitas = DB::select('SELECT DISTINCT users.first_name, users.last_name, order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks, users.gcash_no, payment.gcashrefno, payment.amount
         FROM order_plantita 
         INNER JOIN `order` ON order_plantita.orderno = `order`.orderno
         INNER JOIN users ON `order`.regno = users.regno
         INNER JOIN plantita ON order_plantita.itemno = plantita.itemno
-        WHERE plantita.regno = ?', [$regno]);
+        INNER JOIN payment ON order_plantita.orderno = payment.orderno
+        WHERE plantita.regno = ? ', [$regno]);
 
 
         return view('seller.sellerOrdersPage', ['plantitas' => $plantitas]);
@@ -54,11 +55,12 @@ class SellerOrders extends Controller
     public function edit(string $id)
     {
         $regno = session('regno');
-        $plantitas = DB::select('SELECT users.first_name, users.last_name, order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks
+        $plantitas = DB::select('SELECT DISTINCT users.first_name, users.last_name, order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks, users.gcash_no, payment.gcashrefno, payment.amount
         FROM order_plantita 
         INNER JOIN `order` ON order_plantita.orderno = `order`.orderno
         INNER JOIN users ON `order`.regno = users.regno
         INNER JOIN plantita ON order_plantita.itemno = plantita.itemno
+        INNER JOIN payment ON order_plantita.orderno = payment.orderno
         WHERE plantita.regno = ? AND order_plantita.transno = ?', [$regno, $id]);
         return view('seller.sellerOrderEditPage', ['plantitas' => $plantitas]);
     }

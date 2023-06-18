@@ -63,6 +63,14 @@ if(session('regno') == null){
             <label>Customer Name</label>
             <input type="text" class="form-control" value="{{ $plantita->first_name . ' ' . $plantita->last_name }}"
                 readonly>
+            <label>Customer Gcash Number</label>
+            <input type="text" class="form-control" value="{{ $plantita->gcash_no }}" readonly>
+
+            <label>Customer Gcash Reference Number</label>
+            <input type="text" class="form-control" value="{{ $plantita->gcashrefno }}" readonly>
+
+            <label>Customer Payment Amount</label>
+            <input type="text" class="form-control" value="{{ $plantita->amount }}" readonly>
 
             <label>Order No</label>
             <input type="text" class="form-control" value="{{ $plantita->orderno }}" readonly>

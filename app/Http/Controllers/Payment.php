@@ -32,11 +32,13 @@ class Payment extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'gcash' => 'required|',
+            'gcash' => 'required',
+            'amount' => 'required|numeric',
         ]);
 
         $regno = session('regno');
-        $price = $request->input('gcash');
+        $gcash = $request->input('gcash');
+        $amount = $request->input('amount');
         $date = date('Y-m-d H:i:s');
 
         DB::insert('INSERT INTO `order` (order_date, regno) VALUES (?, ?)', [$date, $regno]);
@@ -51,12 +53,13 @@ class Payment extends Controller
 
             $priceResult = DB::select('SELECT plantita.itemprice FROM plantita INNER JOIN temp_pay ON plantita.itemno = temp_pay.itemno WHERE plantita.itemno = ?', [$itemno]);
 
-            // Extract the price from the $priceResult array
             $price = $priceResult[0]->itemprice;
             $status = 'On Process';
             $remarks = null;
 
             DB::insert('INSERT INTO order_plantita (itemno, orderno, `status`, price, remarks) VALUES (?, ?, ?, ?, ?)', [$itemno, $lastInsertedId, $status, $price, $remarks]);
+
+            DB::insert('INSERT INTO payment (orderno, amount, gcashrefno) VALUES (?, ?, ?)', [$lastInsertedId, $amount, $gcash]);
         }
 
 
