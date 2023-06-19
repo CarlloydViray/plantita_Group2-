@@ -96,12 +96,25 @@ if(session('regno') == null){
                         <img src="{{ asset('storage/images/' . $user->img) }}" class="card-img-top" alt="Plantita Image"
                             style="height: 250px;">
                         <div class="card-body">
-                            <h5 class="card-title">Order No: {{ $user->orderno }}</h5>
-                            <p class="card-text">Trans No: {{ $user->transno }}</p>
-                            <p class="card-text">Item No (Plantita): {{ $user->itemno }}</p>
-                            <p class="card-text">Description: {{ $user->itemdesc }}</p>
+                            <h5 class="card-title">Description: {{ $user->itemdesc }}</h5>
                             <p class="card-text">Price: {{ $user->price }}</p>
-                            <p class="card-text">Status: {{ $user->status }}</p>
+                            <p class="card-text">Amount Paid: {{ $user->amount }}</p>
+                            <p class="card-text">GCash Reference Number: {{ $user->gcashrefno }}</p>
+                            <td>
+                                <p class="card-text">Status:
+                                    @if ($user->status == 'On Process')
+                                        <span style="color: orange">{{ $user->status }}</span>
+                                    @elseif ($user->status == 'To be Delivered')
+                                        <span style="color: blue">{{ $user->status }}</span>
+                                    @elseif ($user->status == 'Paid')
+                                        <span style="color: green">{{ $user->status }}</span>
+                                    @elseif ($user->status == 'Cancelled')
+                                        <span style="color: red">{{ $user->status }}</span>
+                                    @else
+                                        {{ $user->status }}
+                                    @endif
+                                </p>
+                            </td>
                             <p class="card-text">Remarks: {{ $user->remarks }}</p>
                             <form action="{{ route('customerOrders.destroy', $user->transno) }}" method="post">
                                 @csrf

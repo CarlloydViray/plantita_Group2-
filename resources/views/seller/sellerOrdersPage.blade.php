@@ -90,16 +90,14 @@ if(session('regno') == null){
                 <table id="plantitas" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Customer Name</th>
-                            <th>Customer Gcash Number</th>
-                            <th>Customer Gcash Reference Number</th>
-                            <th>Customer Payment Amount</th>
-                            <th>Order No</th>
-                            <th>Trans No</th>
-                            <th>Item No</th>
                             <th>Image</th>
                             <th>Description</th>
                             <th>Price</th>
+                            <th>Customer Name</th>
+                            <th>Customer Gcash Number</th>
+
+                            <th>Customer Payment Amount</th>
+                            <th>Customer Gcash Reference Number</th>
                             <th>Status</th>
                             <th>Remarks</th>
                             <th>Actions</th>
@@ -109,27 +107,6 @@ if(session('regno') == null){
                         @foreach ($plantitas as $plantita)
                             <tr>
                                 <td>
-                                    {{ $plantita->first_name . ' ' . $plantita->last_name }}
-                                </td>
-                                <td>
-                                    {{ $plantita->gcash_no }}
-                                </td>
-                                <td>
-                                    {{ $plantita->gcashrefno }}
-                                </td>
-                                <td>
-                                    {{ $plantita->amount }}
-                                </td>
-                                <td>
-                                    {{ $plantita->orderno }}
-                                </td>
-                                <td>
-                                    {{ $plantita->transno }}
-                                </td>
-                                <td>
-                                    {{ $plantita->itemno }}
-                                </td>
-                                <td>
                                     <img src="{{ asset('storage/images/' . $plantita->img) }}" alt="Plantita Image"
                                         width="250" height="250">
                                 </td>
@@ -137,10 +114,37 @@ if(session('regno') == null){
                                     {{ $plantita->itemdesc }}
                                 </td>
                                 <td>
-                                    {{ $plantita->price }}
+                                    <span style="color: blue">{{ $plantita->price }}</span>
+
                                 </td>
                                 <td>
-                                    {{ $plantita->status }}
+                                    {{ $plantita->first_name . ' ' . $plantita->last_name }}
+                                </td>
+                                <td>
+                                    {{ $plantita->gcash_no }}
+                                </td>
+                                <td>
+                                    @if ($plantita->amount >= $plantita->price)
+                                        <span style="color: green">{{ $plantita->amount }}</span>
+                                    @else
+                                        <span style="color: red">{{ $plantita->amount }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $plantita->gcashrefno }}
+                                </td>
+                                <td>
+                                    @if ($plantita->status == 'On Process')
+                                        <span style="color: orange">{{ $plantita->status }}</span>
+                                    @elseif ($plantita->status == 'To be Delivered')
+                                        <span style="color: blue">{{ $plantita->status }}</span>
+                                    @elseif ($plantita->status == 'Paid')
+                                        <span style="color: green">{{ $plantita->status }}</span>
+                                    @elseif ($plantita->status == 'Cancelled')
+                                        <span style="color: red">{{ $plantita->status }}</span>
+                                    @else
+                                        {{ $plantita->status }}
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $plantita->remarks }}
@@ -152,6 +156,7 @@ if(session('regno') == null){
                         @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

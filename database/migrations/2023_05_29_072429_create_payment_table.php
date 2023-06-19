@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->id('payno');
-            $table->unsignedBigInteger('orderno');
-            $table->foreign('orderno')->references('orderno')->on('order');
+            $table->unsignedBigInteger('transno');
+            $table->foreign('transno')->references('transno')->on('order_plantita');
             $table->integer('amount');
             $table->string('gcashrefno')->collation('utf8mb4_general_ci');
         });

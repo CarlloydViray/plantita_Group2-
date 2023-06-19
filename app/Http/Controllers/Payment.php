@@ -33,34 +33,36 @@ class Payment extends Controller
     {
         $request->validate([
             'gcash' => 'required',
-            'amount' => 'required|numeric',
+            'amount' => 'required',
         ]);
 
         $regno = session('regno');
-        $gcash = $request->input('gcash');
-        $amount = $request->input('amount');
+        $gcashValues = $request->input('gcash');
+        $amountValues = $request->input('amount');
         $date = date('Y-m-d H:i:s');
 
         DB::insert('INSERT INTO `order` (order_date, regno) VALUES (?, ?)', [$date, $regno]);
 
-
-        $lastInsertedId = DB::getPdo()->lastInsertId();
+        $orderno = DB::getPdo()->lastInsertId();
 
         $items = DB::select('SELECT * FROM temp_pay');
 
-        foreach ($items as $item) {
+        foreach ($items as $index => $item) {
             $itemno = $item->itemno;
-
             $priceResult = DB::select('SELECT plantita.itemprice FROM plantita INNER JOIN temp_pay ON plantita.itemno = temp_pay.itemno WHERE plantita.itemno = ?', [$itemno]);
-
             $price = $priceResult[0]->itemprice;
             $status = 'On Process';
             $remarks = null;
 
-            DB::insert('INSERT INTO order_plantita (itemno, orderno, `status`, price, remarks) VALUES (?, ?, ?, ?, ?)', [$itemno, $lastInsertedId, $status, $price, $remarks]);
+            $gcash = $gcashValues[$index];
+            $amount = $amountValues[$index];
 
-            DB::insert('INSERT INTO payment (orderno, amount, gcashrefno) VALUES (?, ?, ?)', [$lastInsertedId, $amount, $gcash]);
+            DB::insert('INSERT INTO order_plantita (itemno, orderno, `status`, price, remarks) VALUES (?, ?, ?, ?, ?)', [$itemno, $orderno, $status, $price, $remarks]);
+            $transno = DB::getPdo()->lastInsertId();
+
+            DB::insert('INSERT INTO payment (transno, amount, gcashrefno) VALUES (?, ?, ?)', [$transno, $amount, $gcash]);
         }
+
 
 
 

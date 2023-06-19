@@ -59,7 +59,7 @@
                                 @enderror
                             </div><br>
                             <button type="submit" class="btn btn-primary ">Login</button>
-                        </form>
+                        </form><br>
                         <p class="card-text">Don't have an account? Click <a href="/signup">here</a></p>
                     </div>
                 </div>

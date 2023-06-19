@@ -55,6 +55,7 @@ Route::get('/', function () {
 });
 
 
+
 Route::get('/signup', function () {
 
     return view('signupPage');
@@ -62,6 +63,17 @@ Route::get('/signup', function () {
 
 Route::get('/login', function () {
 
+    if (session()->has('regno')) {
+        $regno = session('regno');
+        $user  = DB::select('SELECT * FROM users WHERE regno = ?', [$regno]);
+
+        if (!empty($user) && $user[0]->user_type == 'customer') {
+            return redirect('customerPage');
+        }
+        if (!empty($user) && $user[0]->user_type == 'seller') {
+            return redirect('sellerPage');
+        }
+    }
     return view('loginPage');
 });
 

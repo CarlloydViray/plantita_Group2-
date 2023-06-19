@@ -131,16 +131,18 @@ if(session('regno') == null){
                             <p>Gcash Number: {{ $order->gcash_no }}</p>
                             <div class="mb-3">
                                 <label for="gcashRef" class="form-label">Enter Gcash Reference No.</label>
-                                <input type="text" name="gcash" value="{{ old('gcash') }}" class="form-control"
-                                    id="gcashRef">
+                                <input type="text" name="gcash[]" value="{{ old('gcash')[$loop->index] ?? '' }}"
+                                    class="form-control" id="gcashRef">
+
                                 @error('gcash')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="amount" class="form-label">Enter Amount</label>
-                                <input type="text" name="amount" value="{{ old('amount') }}" class="form-control"
-                                    id="gcashRef">
+                                <input type="text" name="amount[]" value="{{ old('amount')[$loop->index] ?? '' }}"
+                                    class="form-control" id="gcashRef">
+
                                 @error('amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

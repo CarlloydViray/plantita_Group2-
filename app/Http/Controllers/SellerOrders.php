@@ -18,7 +18,7 @@ class SellerOrders extends Controller
         INNER JOIN `order` ON order_plantita.orderno = `order`.orderno
         INNER JOIN users ON `order`.regno = users.regno
         INNER JOIN plantita ON order_plantita.itemno = plantita.itemno
-        INNER JOIN payment ON order_plantita.orderno = payment.orderno
+        INNER JOIN payment ON order_plantita.transno = payment.transno
         WHERE plantita.regno = ? ', [$regno]);
 
 
@@ -60,7 +60,7 @@ class SellerOrders extends Controller
         INNER JOIN `order` ON order_plantita.orderno = `order`.orderno
         INNER JOIN users ON `order`.regno = users.regno
         INNER JOIN plantita ON order_plantita.itemno = plantita.itemno
-        INNER JOIN payment ON order_plantita.orderno = payment.orderno
+        INNER JOIN payment ON order_plantita.transno = payment.transno
         WHERE plantita.regno = ? AND order_plantita.transno = ?', [$regno, $id]);
         return view('seller.sellerOrderEditPage', ['plantitas' => $plantitas]);
     }

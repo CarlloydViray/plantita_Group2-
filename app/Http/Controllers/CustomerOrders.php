@@ -13,11 +13,12 @@ class CustomerOrders extends Controller
     public function index()
     {
         $regno = session('regno');
-        $users = DB::select('SELECT order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks, order.regno
-        FROM `order_plantita` 
-        INNER JOIN `order` ON order_plantita.orderno = order.orderno
+        $users = DB::select('SELECT order_plantita.orderno, order_plantita.transno, order_plantita.itemno, plantita.itemdesc, plantita.img, order_plantita.price, order_plantita.status, order_plantita.remarks, `order`.regno, payment.amount, payment.gcashrefno
+        FROM order_plantita
+        INNER JOIN `order` ON order_plantita.orderno = `order`.orderno
         INNER JOIN `plantita` ON order_plantita.itemno = plantita.itemno
-        WHERE order.regno = ?', [$regno]);
+        INNER JOIN payment ON order_plantita.transno = payment.transno
+        WHERE `order`.regno = ?', [$regno]);
 
         return view('customer.customerMyOrdersPage', ['users' => $users]);
     }
