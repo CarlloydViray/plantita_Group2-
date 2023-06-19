@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('orderno');
             $table->foreign('orderno')->references('orderno')->on('order');
             $table->integer('price');
-            $table->string('status')->collation('utf8mb4_general_ci')->nullable()->default(null);
-            $table->string('remarks')->collation('utf8mb4_general_ci');
+            $table->string('status')->collation('utf8mb4_general_ci');
+            $table->string('remarks')->nullable()->collation('utf8mb4_general_ci');
         });
     }
 

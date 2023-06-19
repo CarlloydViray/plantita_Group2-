@@ -45,7 +45,7 @@ class SellerPlantita extends Controller
         $desc = $request->input('desc');
         $price = $request->input('price');
 
-        $img->store('images');
+        $img->store('images' , 'public');
 
         DB::insert('INSERT INTO plantita (itemdesc, itemprice, regno, img) VALUES (?,?,?,?)', [$desc, $price, $regno, $hashImg]);
 
