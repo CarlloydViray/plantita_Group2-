@@ -57,6 +57,11 @@ if(session('regno') == null){
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 
+
+    {{-- font awesome --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
     <title>Marketplace</title>
 
     <script>
@@ -64,6 +69,32 @@ if(session('regno') == null){
             $('#plantitas').DataTable();
         });
     </script>
+
+    <style>
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 30%;
+            background-color: #4CAF50;
+            color: white;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .fab i {
+            font-size: 50px;
+            line-height: 56px;
+
+        }
+    </style>
 </head>
 
 <body>
@@ -121,9 +152,13 @@ if(session('regno') == null){
                 @endforeach
             </div>
 
-            <center>
-                <input type="submit" class="btn btn-success btn-block" value="Add Checked Plantita/s to Cart">
-            </center>
+            <div class="fab">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+            </div>
+
         </form>
         <br><br>
     </div>
