@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('payment', function (Blueprint $table) {
             $table->id('payno');
             $table->unsignedBigInteger('transno');
-            $table->foreign('transno')->references('transno')->on('order_plantita');
+            $table->foreign('transno')
+                ->references('transno')
+                ->on('order_plantita')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->integer('amount');
             $table->string('gcashrefno')->collation('utf8mb4_general_ci');
         });
